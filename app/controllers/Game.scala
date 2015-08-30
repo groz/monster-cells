@@ -11,7 +11,7 @@ class Game extends Actor {
 
     case Join =>
       val id = PlayerId(sender.path.toString)
-      val player = Player(id, 50, 50, 10)
+      val player = Player.generate(id)
       val newPlayers = players + (sender -> player)
       context become process(newPlayers)
       sender ! PlayerList(newPlayers.values.toSeq)

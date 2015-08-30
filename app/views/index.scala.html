@@ -6,8 +6,11 @@
 
     <svg width="300" height="200" ng-click="fieldClick($event)">
 
-        <circle ng-repeat="p in game.players"
-                ng-attr-cx="{{p.x}}" ng-attr-cy="{{p.y}}" ng-attr-r="{{p.size}}"/>
+        <g ng-repeat="p in game.players" ng-attr-fill="{{game.color(p.color)}}">
+        <circle
+                ng-attr-cx="{{p.x}}" ng-attr-cy="{{p.y}}" ng-attr-r="{{p.size}}"
+        />
+        </g>
 
     </svg>
 

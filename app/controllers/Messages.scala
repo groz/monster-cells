@@ -14,6 +14,23 @@ final case class PlayerList(players: Seq[Player]) extends GameMessage
 
 final case class PlayerId(id: String)
 
-final case class Player(id: PlayerId, x: Int, y: Int, size: Int) {
-  def move(x: Int, y: Int) = Player(id, x, y, size)
+final case class Color(r: Int, g: Int, b: Int)
+
+final case class Player(id: PlayerId, x: Int, y: Int, size: Int, color: Color) {
+  def move(x: Int, y: Int) = Player(id, x, y, size, color)
+}
+
+object Player {
+  val rng = new scala.util.Random()
+
+  def randomColor: Color = Color(rng.nextInt(200), rng.nextInt(200), rng.nextInt(200)) // to avoid too white colors
+
+  def generate(id: PlayerId): Player = {
+    Player(id,
+      rng.nextInt(200),
+      rng.nextInt(200),
+      10,
+      randomColor
+    )
+  }
 }

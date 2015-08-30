@@ -19,6 +19,10 @@ var createGame = function() {
 
     self.players = [];
 
+    self.color = function(color) {
+        return "rgb("+color.r+","+color.g+","+color.b+")";
+    };
+
     function key(msg) {
         for (var k in msg)
             return k;
@@ -73,9 +77,11 @@ app.controller('AgarController', function($scope, game) {
 
   $scope.fieldClick = function(e) {
     console.log("click", e);
+
     var cmd = {
       "Move": { x: e.clientX, y: e.clientY }
     };
+
     ws.send(JSON.stringify(cmd));
   };
 
