@@ -1,0 +1,16 @@
+@(message: String)
+
+@main("Welcome to Play") {
+
+<div ng-controller="AgarController">
+
+    <svg width="300" height="200" ng-click="fieldClick($event)">
+
+        <circle ng-repeat="p in game.players"
+                ng-attr-cx="{{p.x}}" ng-attr-cy="{{p.y}}" ng-attr-r="{{p.size}}"/>
+
+    </svg>
+
+</div>
+
+}
