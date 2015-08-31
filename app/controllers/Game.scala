@@ -14,7 +14,10 @@ class Game extends Actor {
       val player = Player.generate(id)
       val newPlayers = players + (sender -> player)
       context become process(newPlayers)
+
+      sender ! PlayerIdentity(id)
       sender ! PlayerList(newPlayers.values.toSeq)
+
       players.keySet.foreach (_ ! PlayerJoined(player))
 
     case Leave =>
@@ -22,10 +25,10 @@ class Game extends Actor {
       context become process(players - sender)
       players.keySet.foreach(_ ! PlayerLeft(player.id))
 
-    case Move(x, y) =>
-      val player = players(sender).move(x, y)
+    case Update(position, speed) =>
+      val player = players(sender).update(position, speed)
       context become process(players.updated(sender, player))
-      players.keySet.foreach(_ ! PlayerUpdated(player))
+      (players.keySet - sender).foreach(_ ! PlayerUpdated(player))
   }
 
 }

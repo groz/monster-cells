@@ -4,14 +4,24 @@
 
 <div ng-controller="AgarController">
 
-    <svg width="300" height="200" ng-click="fieldClick($event)">
+    <svg id="game-field" style="border: solid; margin-left: 50px"
+         ng-attr-width="{{game.screen.w}}" ng-attr-height="{{game.screen.h}}"
+         ng-click="fieldClick($event)"
+         ng-mousemove="fieldMouseMove($event)"
+    >
+        <g ng-attr-transform="scale({{game.screen.w}}, {{game.screen.h}})">
 
-        <g ng-repeat="p in game.players" ng-attr-fill="{{game.color(p.color)}}">
-        <circle
-                ng-attr-cx="{{p.x}}" ng-attr-cy="{{p.y}}" ng-attr-r="{{p.size}}"
-        />
+        <g ng-repeat="p in game.players" ng-attr-fill="rgb({{p.color.r}},{{p.color.g}},{{p.color.b}})"
+           ng-attr-transform="translate({{p.position.x - p.size/2}}, {{p.position.y  - p.size/2}})  rotate({{game.angle(p)}})">
+
+            <circle ng-attr-r="{{p.size}}"></circle>
+
+            <polyline style="stroke: black; stroke-width: 0.01"
+                ng-attr-points="0,{{-p.size}}  {{p.size}},0  0,{{p.size}}"
+            ></polyline>
         </g>
 
+        </g>
     </svg>
 
 </div>
